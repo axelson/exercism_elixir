@@ -26,31 +26,35 @@ defmodule PigLatin do
     |> Enum.join(" ")
   end
 
-  def append_ay(word), do: word <> "ay"
+  defp append_ay(word), do: word <> "ay"
 
   # Special consonants
-  def translate_word("ch" <> rest), do: rest <> "ch"
-  def translate_word("qu" <> rest), do: rest <> "qu"
-  def translate_word("squ" <> rest), do: rest <> "squ"
-  def translate_word("thr" <> rest), do: rest <> "thr"
-  def translate_word("th" <> rest), do: rest <> "th"
-  def translate_word("sch" <> rest), do: rest <> "sch"
+  defp translate_word("ch" <> rest), do: rest <> "ch"
+  defp translate_word("qu" <> rest), do: rest <> "qu"
+  defp translate_word("squ" <> rest), do: rest <> "squ"
+  defp translate_word("thr" <> rest), do: rest <> "thr"
+  defp translate_word("th" <> rest), do: rest <> "th"
+  defp translate_word("sch" <> rest), do: rest <> "sch"
 
   # Special vowels
-  def translate_word("yt" <> _ = phrase), do: phrase
-  def translate_word("xr" <> _ = phrase), do: phrase
+  defp translate_word("yt" <> _ = phrase), do: phrase
+  defp translate_word("xr" <> _ = phrase), do: phrase
 
-  def translate_word(<<first_char::binary-size(1), rest::binary>>, consonants \\ "") do
+  defp translate_word("", consonants) do
+    consonants
+  end
+
+  defp translate_word(<<first_char::binary-size(1), rest::binary>>, consonants \\ "") do
     case vowel?(first_char) do
       true -> first_char <> rest <> consonants
       false -> translate_word(rest, consonants <> first_char)
     end
   end
 
-  def vowel?("a"), do: true
-  def vowel?("e"), do: true
-  def vowel?("i"), do: true
-  def vowel?("o"), do: true
-  def vowel?("u"), do: true
-  def vowel?(_), do: false
+  defp vowel?("a"), do: true
+  defp vowel?("e"), do: true
+  defp vowel?("i"), do: true
+  defp vowel?("o"), do: true
+  defp vowel?("u"), do: true
+  defp vowel?(_), do: false
 end
