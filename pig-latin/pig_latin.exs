@@ -40,11 +40,9 @@ defmodule PigLatin do
   defp translate_word("yt" <> _ = phrase), do: phrase
   defp translate_word("xr" <> _ = phrase), do: phrase
 
-  defp translate_word("", consonants) do
-    consonants
-  end
-
-  defp translate_word(<<first_char::binary-size(1), rest::binary>>, consonants \\ "") do
+  defp translate_word(word, consonants \\ "")
+  defp translate_word("", consonants), do: consonants
+  defp translate_word(<<first_char::binary-size(1), rest::binary>>, consonants) do
     case vowel?(first_char) do
       true -> first_char <> rest <> consonants
       false -> translate_word(rest, consonants <> first_char)
