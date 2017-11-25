@@ -66,17 +66,17 @@ defmodule PigLatinTest do
       assert PigLatin.translate("qat") == "atqay"
     end
 
-    @tag :pending
+    # @tag :pending
     test "word beginning with two consonants" do
       assert PigLatin.translate("pleasure") == "easureplay"
     end
 
-    @tag :pending
+    # @tag :pending
     test "word beginning with three consonants" do
       assert PigLatin.translate("stringify") == "ingifystray"
     end
 
-    @tag :pending
+    # @tag :pending
     test "word beginning with a serie of consonants : aliens speak Pig Latin too" do
       assert PigLatin.translate("zkrrkrkrkrzzzkewk") == "ewkzkrrkrkrkrzzzkay"
     end

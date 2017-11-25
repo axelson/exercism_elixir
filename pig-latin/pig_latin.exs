@@ -32,8 +32,22 @@ defmodule PigLatin do
   def do_translate("u" <> _ = phrase), do: phrase <> "ay"
 
   def do_translate(phrase) do
-    [first_char | rest] = String.graphemes(phrase)
-    Enum.join(rest) <> first_char <> "ay"
+    shift_consonants(phrase) <> "ay"
   end
+
+  def shift_consonants(<<first_char::binary-size(1), rest::binary>>, consonants \\ "") do
+    if vowel?(first_char) do
+      first_char <> rest <> consonants
+    else
+      shift_consonants(rest, consonants <> first_char)
+    end
+  end
+
+  def vowel?("a"), do: true
+  def vowel?("e"), do: true
+  def vowel?("i"), do: true
+  def vowel?("o"), do: true
+  def vowel?("u"), do: true
+  def vowel?(_), do: false
 end
 
