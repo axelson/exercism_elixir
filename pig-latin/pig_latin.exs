@@ -1,4 +1,10 @@
 defmodule PigLatin do
+  @moduledoc """
+  This is an initial version that primarily uses binary pattern matching. I
+  would like to generalize the implementation a bit. Right now translate_word/1
+  is a bit redundant with vowel?/1
+  """
+
   @doc """
   Given a `phrase`, translate it a word at a time to Pig Latin.
 
@@ -15,23 +21,28 @@ defmodule PigLatin do
   """
   @spec translate(phrase :: String.t()) :: String.t()
   def translate(phrase) do
-    do_translate(phrase)
+    phrase
+    |> String.split()
+    |> Enum.map(&translate_word/1)
+    |> Enum.join(" ")
   end
 
-  def do_translate("ch" <> rest), do: rest <> "ch" <> "ay"
-  def do_translate("qu" <> rest), do: rest <> "qu" <> "ay"
-  def do_translate("squ" <> rest), do: rest <> "squ" <> "ay"
-  def do_translate("thr" <> rest), do: rest <> "thr" <> "ay"
-  def do_translate("th" <> rest), do: rest <> "th" <> "ay"
-  def do_translate("sch" <> rest), do: rest <> "sch" <> "ay"
+  def translate_word("ch" <> rest), do: rest <> "ch" <> "ay"
+  def translate_word("qu" <> rest), do: rest <> "qu" <> "ay"
+  def translate_word("squ" <> rest), do: rest <> "squ" <> "ay"
+  def translate_word("thr" <> rest), do: rest <> "thr" <> "ay"
+  def translate_word("th" <> rest), do: rest <> "th" <> "ay"
+  def translate_word("sch" <> rest), do: rest <> "sch" <> "ay"
 
-  def do_translate("a" <> _ = phrase), do: phrase <> "ay"
-  def do_translate("e" <> _ = phrase), do: phrase <> "ay"
-  def do_translate("i" <> _ = phrase), do: phrase <> "ay"
-  def do_translate("o" <> _ = phrase), do: phrase <> "ay"
-  def do_translate("u" <> _ = phrase), do: phrase <> "ay"
+  def translate_word("a" <> _ = phrase), do: phrase <> "ay"
+  def translate_word("e" <> _ = phrase), do: phrase <> "ay"
+  def translate_word("i" <> _ = phrase), do: phrase <> "ay"
+  def translate_word("o" <> _ = phrase), do: phrase <> "ay"
+  def translate_word("u" <> _ = phrase), do: phrase <> "ay"
+  def translate_word("yt" <> _ = phrase), do: phrase <> "ay"
+  def translate_word("xr" <> _ = phrase), do: phrase <> "ay"
 
-  def do_translate(phrase) do
+  def translate_word(phrase) do
     shift_consonants(phrase) <> "ay"
   end
 
@@ -50,4 +61,3 @@ defmodule PigLatin do
   def vowel?("u"), do: true
   def vowel?(_), do: false
 end
-

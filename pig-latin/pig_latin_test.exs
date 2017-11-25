@@ -115,19 +115,19 @@ defmodule PigLatinTest do
   end
 
   describe "some letter clusters are treated like a single vowel" do
-    @tag :pending
+    # @tag :pending
     test "word beginning with yt" do
       assert PigLatin.translate("yttria") == "yttriaay"
     end
 
-    @tag :pending
+    # @tag :pending
     test "word beginning with xr" do
       assert PigLatin.translate("xray") == "xrayay"
     end
   end
 
   describe "phrases are translated" do
-    @tag :pending
+    # @tag :pending
     test "a whole phrase" do
       assert PigLatin.translate("quick fast run") == "ickquay astfay unray"
     end
