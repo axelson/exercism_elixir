@@ -18,6 +18,10 @@ defmodule PigLatin do
     do_translate(phrase)
   end
 
-  def do_translate("a" <> rest), do: "a" <> rest <> "ay"
+  def do_translate("a" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("e" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("i" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("o" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("u" <> _ = phrase), do: phrase <> "ay"
 end
 
