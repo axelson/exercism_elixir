@@ -18,10 +18,22 @@ defmodule PigLatin do
     do_translate(phrase)
   end
 
+  def do_translate("ch" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("qu" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("squ" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("th" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("thr" <> _ = phrase), do: phrase <> "ay"
+  def do_translate("sch" <> _ = phrase), do: phrase <> "ay"
+
   def do_translate("a" <> _ = phrase), do: phrase <> "ay"
   def do_translate("e" <> _ = phrase), do: phrase <> "ay"
   def do_translate("i" <> _ = phrase), do: phrase <> "ay"
   def do_translate("o" <> _ = phrase), do: phrase <> "ay"
   def do_translate("u" <> _ = phrase), do: phrase <> "ay"
+
+  def do_translate(phrase) do
+    [first_char | rest] = String.graphemes(phrase)
+    Enum.join(rest) <> first_char <> "ay"
+  end
 end
 
