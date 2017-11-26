@@ -1,14 +1,12 @@
 defmodule Bob do
   def hey(input) do
-    last_char = String.last(input)
-    trimmed = String.trim(input)
-    has_letter = String.match?(input, ~r/\p{L}/u)
-    all_upper = String.match?(input, ~r/^(\p{Lu}|[^\p{L}])+$/u)
+    upcased = String.upcase(input)
+    downcased = String.downcase(input)
 
     cond do
-      last_char == "?" -> "Sure."
-      trimmed == "" -> "Fine. Be that way!"
-      all_upper && has_letter -> "Whoa, chill out!"
+      String.ends_with?(input,"?") -> "Sure."
+      String.trim(input) == "" -> "Fine. Be that way!"
+      upcased == input && downcased != input -> "Whoa, chill out!"
       true -> "Whatever."
     end
   end
