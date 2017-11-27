@@ -66,21 +66,17 @@ defmodule TwelveDays do
     |> Enum.join("\n")
   end
 
-  defp line(number) do
-    @verses[number]
-  end
+  defp line(number), do: @verses[number]
 
-  defp long_number(number) do
-    @numbers[number]
-  end
+  defp long_number(number), do: @numbers[number]
 
-  defp add_separators([]), do: []
   defp add_separators([first | rest]) when length(rest) > 1 do
-    [first | [", " | add_separators(rest)]]
+    [first, ", ", add_separators(rest)]
   end
   defp add_separators([first, rest]) do
     [first, ", and ", rest]
   end
   defp add_separators([rest]), do: [rest]
+  defp add_separators([]), do: []
 end
 
