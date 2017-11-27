@@ -9,7 +9,7 @@ defmodule TwelveDays do
     7 => "seven Swans-a-Swimming",
     6 => "six Geese-a-Laying",
     5 => "five Gold Rings",
-    4 => "our Calling Birds",
+    4 => "four Calling Birds",
     3 => "three French Hens",
     2 => "two Turtle Doves",
     1 => "a Partridge in a Pear Tree",
@@ -40,7 +40,7 @@ defmodule TwelveDays do
 
     verses = number..1
     |> Enum.map(&line/1)
-    |> Enum.join(", ")
+    |> add_separators()
 
     "#{intro} #{verses}."
   end
@@ -67,5 +67,14 @@ defmodule TwelveDays do
   defp long_number(number) do
     @numbers[number]
   end
+
+  defp add_separators([]), do: []
+  defp add_separators([first | rest]) when length(rest) > 1 do
+    [first | [", " | add_separators(rest)]]
+  end
+  defp add_separators([first, rest]) do
+    [first, ", and ", rest]
+  end
+  defp add_separators([rest]), do: [rest]
 end
 
