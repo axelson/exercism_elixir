@@ -23,7 +23,7 @@ defmodule TwelveDays do
     5 => "fifth",
     6 => "sixth",
     7 => "seventh",
-    8 => "eigth",
+    8 => "eighth",
     9 => "ninth",
     10 => "tenth",
     11 => "eleventh",
@@ -51,6 +51,9 @@ defmodule TwelveDays do
   """
   @spec verses(starting_verse :: integer, ending_verse :: integer) :: String.t()
   def verses(starting_verse, ending_verse) do
+    starting_verse..ending_verse
+    |> Enum.map(&verse/1)
+    |> Enum.join("\n")
   end
 
   @doc """
