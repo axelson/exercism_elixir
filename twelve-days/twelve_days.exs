@@ -61,6 +61,9 @@ defmodule TwelveDays do
   """
   @spec sing():: String.t()
   def sing do
+    1..12
+    |> Enum.map(&verse/1)
+    |> Enum.join("\n")
   end
 
   defp line(number) do

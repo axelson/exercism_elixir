@@ -64,7 +64,7 @@ defmodule TwelveDaysTest do
   end
 
   describe "sing" do
-    @tag :pending
+    # @tag :pending
     test "all 12 verses" do
       assert TwelveDays.sing == """
       On the first day of Christmas my true love gave to me, a Partridge in a Pear Tree.
