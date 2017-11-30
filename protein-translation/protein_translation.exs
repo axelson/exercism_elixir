@@ -1,7 +1,28 @@
 defmodule ProteinTranslation do
   @moduledoc """
-  First attempt. do_of_rna/1 is a bit sloppy and I don't like how I'm currently doing the error checking.
+  Cleaned up implementation that dynamically defines the of_codon function to
+  make full use of pattern matching (and for speed)
   """
+
+  @codons %{
+    "UGU" => "Cysteine",
+    "UGC" => "Cysteine",
+    "UUA" => "Leucine",
+    "UUG" => "Leucine",
+    "AUG" => "Methionine",
+    "UUU" => "Phenylalanine",
+    "UUC" => "Phenylalanine",
+    "UCU" => "Serine",
+    "UCC" => "Serine",
+    "UCA" => "Serine",
+    "UCG" => "Serine",
+    "UGG" => "Tryptophan",
+    "UAU" => "Tyrosine",
+    "UAC" => "Tyrosine",
+    "UAA" => "STOP",
+    "UAG" => "STOP",
+    "UGA" => "STOP",
+  }
 
   @doc """
   Given an RNA string, return a list of proteins specified by codons, in order.
@@ -16,8 +37,8 @@ defmodule ProteinTranslation do
     end
   end
 
-  def do_of_rna(""), do: []
-  def do_of_rna(rna) do
+  defp do_of_rna(""), do: []
+  defp do_of_rna(rna) do
     {codon, rest} = String.split_at(rna, 3)
 
     case of_codon(codon) do
@@ -49,23 +70,11 @@ defmodule ProteinTranslation do
   UGA -> STOP
   """
   @spec of_codon(String.t()) :: { atom, String.t() }
-  def of_codon("UGU"), do: {:ok, "Cysteine"}
-  def of_codon("UGC"), do: {:ok, "Cysteine"}
-  def of_codon("UUA"), do: {:ok, "Leucine"}
-  def of_codon("UUG"), do: {:ok, "Leucine"}
-  def of_codon("AUG"), do: {:ok, "Methionine"}
-  def of_codon("UUU"), do: {:ok, "Phenylalanine"}
-  def of_codon("UUC"), do: {:ok, "Phenylalanine"}
-  def of_codon("UCU"), do: {:ok, "Serine"}
-  def of_codon("UCC"), do: {:ok, "Serine"}
-  def of_codon("UCA"), do: {:ok, "Serine"}
-  def of_codon("UCG"), do: {:ok, "Serine"}
-  def of_codon("UGG"), do: {:ok, "Tryptophan"}
-  def of_codon("UAU"), do: {:ok, "Tyrosine"}
-  def of_codon("UAC"), do: {:ok, "Tyrosine"}
-  def of_codon("UAA"), do: {:ok, "STOP"}
-  def of_codon("UAG"), do: {:ok, "STOP"}
-  def of_codon("UGA"), do: {:ok, "STOP"}
+  Enum.each(@codons, fn {codon, protein} ->
+    def of_codon(unquote(codon)) do
+      {:ok, unquote(protein)}
+    end
+  end)
   def of_codon(_), do: {:error, "invalid codon"}
 end
 
