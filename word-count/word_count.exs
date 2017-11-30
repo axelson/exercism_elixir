@@ -10,13 +10,8 @@ defmodule Words do
     |> String.replace(~r/[^\p{Xan}\p{Xsp}-]/u, " ")
     |> String.downcase()
     |> String.split()
-    |> count_words()
-  end
-
-  def count_words(words, counts \\ %{})
-  def count_words([], counts), do: counts
-  def count_words([word | rest], counts) do
-    new_counts = Map.update(counts, word, 1, &(&1 + 1))
-    count_words(rest, new_counts)
+    |> Enum.reduce(%{}, fn word, acc ->
+      Map.update(acc, word, 1, &(&1 + 1))
+    end)
   end
 end
