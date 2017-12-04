@@ -6,15 +6,11 @@ defmodule StringSeries do
   """
   @spec slices(s :: String.t(), size :: integer) :: list(String.t())
   def slices(_s, size) when size <= 0, do: []
-  def slices(string, size) when is_binary(string),
-    do: slices(String.graphemes(string), size)
-  def slices(graphemes, size) when length(graphemes) < size, do: []
-  def slices([_ | rest] = graphemes, size) do
-    slice =
-      graphemes
-      |> Enum.take(size)
-      |> Enum.join("")
-    [slice | slices(rest, size)]
+  def slices(string, size) do
+    string
+    |> String.graphemes()
+    |> Enum.chunk_every(size, 1, :discard)
+    |> Enum.map(&Enum.join/1)
   end
 end
 
