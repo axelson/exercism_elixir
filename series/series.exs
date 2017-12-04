@@ -9,8 +9,7 @@ defmodule StringSeries do
   def slices(string, size) when is_binary(string),
     do: slices(String.graphemes(string), size)
   def slices(graphemes, size) when length(graphemes) < size, do: []
-  def slices(graphemes, size) do
-    {_, rest} = Enum.split(graphemes, 1)
+  def slices([_ | rest] = graphemes, size) do
     slice =
       graphemes
       |> Enum.take(size)
