@@ -7,12 +7,15 @@ defmodule Acronym do
   def abbreviate(string) do
     string
     |> String.split()
-    |> Enum.map(&first_character/1)
-    # Note: I don't like this here. Probably need to change my
-    # &first_character/1 implementation
-    |> Kernel.to_string()
-    |> String.upcase()
+    |> Enum.map(fn word ->
+      {char, rest} = String.split_at(word, 1)
+      String.upcase(char) <> uppercase_letters(rest)
+    end)
+    |> Enum.join()
   end
 
-  defp first_character(<<char :: utf8, _rest :: binary>>), do: char
+  defp uppercase_letters(word) do
+    Regex.scan(~r/[[:upper:]]/, word)
+    |> Enum.join()
+  end
 end
