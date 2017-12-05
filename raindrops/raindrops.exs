@@ -10,15 +10,25 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t
   def convert(number) do
-    case {rem(number, 3), rem(number, 5), rem(number, 7)} do
-      {0, 0, 0} -> "PlingPlangPlong"
-      {0, 0, _} -> "PlingPlang"
-      {0, _, 0} -> "PlingPlong"
-      {0, _, _} -> "Pling"
-      {_, 0, 0} -> "PlangPlong"
-      {_, 0, _} -> "Plang"
-      {_, _, 0} -> "Plong"
-      {_, _, _} -> to_string(number)
-    end
+    ""
+    |> maybe_pling(number)
+    |> maybe_plang(number)
+    |> maybe_plong(number)
+    |> maybe_number(number)
   end
+
+  defp maybe_pling(string, number) when rem(number, 3) == 0,
+    do: string <> "Pling"
+  defp maybe_pling(string, _), do: string
+
+  defp maybe_plang(string, number) when rem(number, 5) == 0,
+    do: string <> "Plang"
+  defp maybe_plang(string, _), do: string
+
+  defp maybe_plong(string, number) when rem(number, 7) == 0,
+    do: string <> "Plong"
+  defp maybe_plong(string, _), do: string
+
+  defp maybe_number("", number), do: to_string(number)
+  defp maybe_number(string, _), do: string
 end
