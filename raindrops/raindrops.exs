@@ -1,4 +1,10 @@
 defmodule Raindrops do
+  @factors [
+    {3, "Pling"},
+    {5, "Plang"},
+    {7, "Plong"},
+  ]
+
   @doc """
   Returns a string based on raindrop factors.
 
@@ -10,25 +16,17 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t
   def convert(number) do
-    ""
-    |> maybe_pling(number)
-    |> maybe_plang(number)
-    |> maybe_plong(number)
-    |> maybe_number(number)
+    case factors(number) do
+      "" -> to_string(number)
+      string -> string
+    end
   end
 
-  defp maybe_pling(string, number) when rem(number, 3) == 0,
-    do: string <> "Pling"
-  defp maybe_pling(string, _), do: string
-
-  defp maybe_plang(string, number) when rem(number, 5) == 0,
-    do: string <> "Plang"
-  defp maybe_plang(string, _), do: string
-
-  defp maybe_plong(string, number) when rem(number, 7) == 0,
-    do: string <> "Plong"
-  defp maybe_plong(string, _), do: string
-
-  defp maybe_number("", number), do: to_string(number)
-  defp maybe_number(string, _), do: string
+  defp factors(number) do
+    @factors
+    |> Enum.reduce("", fn
+      {factor, text}, acc when rem(number, factor) == 0 -> acc <> text
+      _, acc -> acc
+    end)
+  end
 end
