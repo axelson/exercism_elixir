@@ -10,6 +10,15 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t
   def convert(number) do
-
+    case {rem(number, 3), rem(number, 5), rem(number, 7)} do
+      {0, 0, 0} -> "PlingPlangPlong"
+      {0, 0, _} -> "PlingPlang"
+      {0, _, 0} -> "PlingPlong"
+      {0, _, _} -> "Pling"
+      {_, 0, 0} -> "PlangPlong"
+      {_, 0, _} -> "Plang"
+      {_, _, 0} -> "Plong"
+      {_, _, _} -> to_string(number)
+    end
   end
 end
