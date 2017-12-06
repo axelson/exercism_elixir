@@ -16,11 +16,10 @@ defmodule RunLengthEncoder do
     string
     |> String.graphemes()
     |> Enum.chunk_by(& &1)
-    |> Enum.map(fn ->
+    |> Enum.map_join(fn
       [character] -> character
-      [character | _] = list -> length(list) <> character
+      [character | _] = list -> to_string(length(list)) <> character
     end)
-    |> Enum.join()
   end
 
   @spec decode(String.t) :: String.t
