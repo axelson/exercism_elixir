@@ -1,12 +1,16 @@
-# if !System.get_env("EXERCISM_TEST_EXAMPLES") do
-#   Code.load_file("rle.exs", __DIR__)
-# end
-
-ExUnit.start
-ExUnit.configure exclude: :pending, trace: true
-
 defmodule RunLengthEncoderTest do
   use ExUnit.Case
+  use ExUnitProperties
+
+  property "encode followed by decode returns the original string" do
+    check all bin1 <- StreamData.string([?\s | Enum.concat([?a..?z, ?A..?Z])]) do
+      result =
+        bin1
+        |> RunLengthEncoder.encode()
+        |> RunLengthEncoder.decode()
+      assert result == bin1
+    end
+  end
 
   test "encode empty string" do
     assert RunLengthEncoder.encode("") === ""
