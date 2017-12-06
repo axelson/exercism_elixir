@@ -16,7 +16,10 @@ defmodule RunLengthEncoder do
     string
     |> String.graphemes()
     |> Enum.chunk_by(& &1)
-    |> Enum.map(&collapse/1)
+    |> Enum.map(fn ->
+      [character] -> character
+      [character | _] = list -> length(list) <> character
+    end)
     |> Enum.join()
   end
 
@@ -25,11 +28,6 @@ defmodule RunLengthEncoder do
     string
     |> expand()
     |> Enum.join()
-  end
-
-  defp collapse([character]), do: character
-  defp collapse([character | _] = list) do
-    "#{length(list)}#{character}"
   end
 
   defp expand(""), do: []
