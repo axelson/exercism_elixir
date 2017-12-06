@@ -41,12 +41,7 @@ defmodule RunLengthEncoder do
         [char | expand(rest)]
       {num, rest} ->
         {char, rest} = String.next_grapheme(rest)
-        [repeat_char(num, char) | expand(rest)]
+        [String.duplicate(char, num) | expand(rest)]
     end
-  end
-
-  defp repeat_char(num, char) do
-    (for _ <- 1..num, do: char)
-    |> Enum.join
   end
 end
