@@ -1,5 +1,5 @@
 defmodule Roman do
-  @values [
+  @numerals [
     {"M", 1000},
     {"CM", 900},
     {"D", 500},
@@ -20,16 +20,22 @@ defmodule Roman do
   """
   @spec numerals(pos_integer) :: String.t()
   def numerals(number) do
-    case numeral(number) do
-      {letters, 0} -> letters
-      {letters, remaining} -> letters <> numerals(remaining)
-    end
+    numerals_list(abs(number), [])
+    |> Enum.reverse()
+    |> Enum.join("")
+  end
+
+  defp numerals_list(number, letters) when number <= 0, do: letters
+
+  defp numerals_list(number, letters) do
+    {roman, val} = numeral(number)
+    numerals_list(number - val, [roman | letters])
   end
 
   @spec numeral(number) :: {String.t(), integer}
-  for {letter, value} <- @values do
-    def numeral(n) when n >= unquote(value) do
-      {unquote(letter), n - unquote(value)}
-    end
+  def numeral(number) do
+    Enum.find(@numerals, fn {_roman, val} ->
+      val <= number
+    end)
   end
 end

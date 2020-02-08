@@ -1,5 +1,5 @@
 ExUnit.start()
-ExUnit.configure(exclude: :pending, trace: true)
+ExUnit.configure(trace: true)
 
 defmodule RomanTest do
   use ExUnit.Case
@@ -12,6 +12,10 @@ defmodule RomanTest do
   @tag :pending
   test "2" do
     assert Roman.numerals(2) == "II"
+  end
+
+  test "-2" do
+    assert Roman.numerals(-2) == "II"
   end
 
   @tag :pending
