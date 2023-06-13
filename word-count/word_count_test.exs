@@ -59,4 +59,10 @@ defmodule WordsTest do
     expected = %{"götterfunken" => 1, "schöner" => 1, "freude" => 1}
     assert Words.count("Freude schöner Götterfunken") == expected
   end
+
+  @tag :pending
+  test "Japanese" do
+    expected = %{"こんにちは" => 1, "means" => 1, "hello" => 1}
+    assert Words.count("こんにちは means hello") == expected
+  end
 end
