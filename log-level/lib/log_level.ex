@@ -10,16 +10,11 @@ defmodule LogLevel do
   @unknown :unknown
 
   def to_label(level, legacy?) do
-    case Map.get(@log_codes, level) do
-      {label, legacy_supported} ->
-        if legacy? && !legacy_supported do
-          @unknown
-        else
-          label
-        end
+    {label, legacy_supported} = Map.get(@log_codes, level, {@unknown, true})
 
-      nil ->
-        @unknown
+    cond do
+      legacy? && !legacy_supported -> :unknown
+      true -> label
     end
   end
 
